@@ -36,55 +36,58 @@
                 ctx.font = '20px _sans';
                 ctx.textBaseline = 'top';
                 ctx.fillText ("Player Ship",0,180);
-                
-                ctx.strokeStyle = '#ffffff';
                 ctx.beginPath();
-                ctx.moveTo(10,0);
-                ctx.lineTo(19,19);
-                ctx.lineTo(10,9);
-                ctx.moveTo(9,9);
-                ctx.lineTo(0,19);
-                ctx.lineTo(9,0);   
-               
                 ctx.stroke();
                 ctx.closePath();
             }
             createCanvas();
             
-           /* var ship = {
-                
-                drawShip: function {
-                    ctx.strokeStyle = '#ffffff';
+          var spaceShip = {
+              
+                position: {
+                    x: canvas.width / 2, 
+                    y: canvas.height - 20
+                }, 
+              
+                size: {
+                    width: 50, 
+                    height: 12
+                },  
+              
+                Velocity: {
+                    x: 20
+                }, 
+                colour: "blue", 
+                drawSpaceShip: function(){ // Draw Spaceship Object
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.beginPath();
-                    ctx.moveTo(10,0);
-                    ctx.lineTo(19,19);
-                    ctx.lineTo(10,9);
-                    ctx.moveTo(9,9);
-                    ctx.lineTo(0,19);
-                    ctx.lineTo(9,0);    
+                    ctx.fillStyle = "blue";
+                    ctx.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
+                    ctx.fillRect(this.position.x + 15, this.position.y, this.size.width - 30, this.size.height / 2 - 12);
+                    ctx.fillRect(this.position.x + 22.5, this.position.y, this.size.width - 45, this.size.height / 2 - 15);
 
-                    ctx.stroke();
-                    ctx.closePath();
-                }
-            }*/
+                }// End drawShip function 
+            }; // End spaceShip Object
+
 
             function stars() {
 
             // Draw 50 stars.
-            for (i = 0; i <= 20; i++) {
+            for (i = 0; i <= 10; i++) {
               // Get random positions for stars.
-              var x = Math.floor(Math.random() * 599);
-              var y = Math.floor(Math.random() * 599);
-
+              var starX = Math.floor(Math.random() * 599);
+              //var starX = 20;
+              var starY = Math.floor(Math.random() * 599);
+              var starRad = Math.floor(Math.random() * 30)
               // Make the stars white
               ctx.fillStyle = "white";
 
               // Give the ship some room by painting black stars.
-              if (x < 30 || y < 30) ctx.fillStyle = "black";
+              if (starX < 30 || starY < 30) ctx.fillStyle = "black";
 
               // Draw an individual star.
               ctx.beginPath();
-              ctx.arc(x, y, 15, 0, Math.PI * 2, true);
+              ctx.arc(starX, starY, starRad, 0, Math.PI * 2, true);
               ctx.closePath();
               ctx.fill();
 
