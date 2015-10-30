@@ -7,67 +7,114 @@
     <title>Canvas</title>
 
     <style type="text/css">
-        canvas {
-            border: 1px solid grey;
-        }
+        
     </style>
 
 </head>
 
 <body>
-    <canvas id="canvas-for-Game" ></canvas>
+    <div style="position: absolute; top: 50px; left: 50px;">
+    <canvas id="canvas-for-Game" width ="600" height="600"></canvas>
     <script language="javascript" src="jquery-2.1.4.min (1).js"></script>
     <script>
         window.onload = function () {
             //global variables 
-           var canvas = document.getElementById("canvas-for-Game");
-          // Get a 2D context for the canvas.
-          var ctx = canvas.getContext("2d");
-          // Make the fill style red.
-          ctx.fillStyle = "rgb(255, 0, 0)";
-            var gravity = 0;
-            var forceFactor = 0.3;
-            var balls = new Array();
-            
-            function resizeWindow(evt) {
-                //when the browser window is resized the canvas height and width will be adjusted
-                canvas.height = $(window).height();
-                canvas.width = $(window).width();
-            }
-            resizeWindow();
-            
-            var ball = {
-                x: canvas.width / 2
-                , y: canvas.height / 2
-                , r: 17
-              }
-      
-            
-            function drawCircle() {
+            var canvas = document.getElementById("canvas-for-Game");
+            /*canvas.width = $(window).width();
+            canvas.height = $(window).height();*/
+            // Get a 2D context for the canvas.
+            var ctx = canvas.getContext("2d");
+            // Make the fill style red.
+            var oldBack = new Image();
+
+
+            function createCanvas(){
+                
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#000000';
+                ctx.font = '20px _sans';
+                ctx.textBaseline = 'top';
+                ctx.fillText ("Player Ship",0,180);
+                
+                ctx.strokeStyle = '#ffffff';
                 ctx.beginPath();
-                ctx.arc(ball.x, ball.y, ball.r, 0, 2 * Math.PI);
-                ctx.fill();
-              }
-            drawCircle();
+                ctx.moveTo(10,0);
+                ctx.lineTo(19,19);
+                ctx.lineTo(10,9);
+                ctx.moveTo(9,9);
+                ctx.lineTo(0,19);
+                ctx.lineTo(9,0);   
+               
+                ctx.stroke();
+                ctx.closePath();
+            }
+            createCanvas();
             
-            window.addEventListener("keydown", function(event) { 
+           /* var ship = {
+                
+                drawShip: function {
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.beginPath();
+                    ctx.moveTo(10,0);
+                    ctx.lineTo(19,19);
+                    ctx.lineTo(10,9);
+                    ctx.moveTo(9,9);
+                    ctx.lineTo(0,19);
+                    ctx.lineTo(9,0);    
+
+                    ctx.stroke();
+                    ctx.closePath();
+                }
+            }*/
+
+            function stars() {
+
+            // Draw 50 stars.
+            for (i = 0; i <= 20; i++) {
+              // Get random positions for stars.
+              var x = Math.floor(Math.random() * 599);
+              var y = Math.floor(Math.random() * 599);
+
+              // Make the stars white
+              ctx.fillStyle = "white";
+
+              // Give the ship some room by painting black stars.
+              if (x < 30 || y < 30) ctx.fillStyle = "black";
+
+              // Draw an individual star.
+              ctx.beginPath();
+              ctx.arc(x, y, 15, 0, Math.PI * 2, true);
+              ctx.closePath();
+              ctx.fill();
+
+              // Save black background.
+              oldBack = ctx.getImageData(0, 0, 30, 30);
+            }
+          }
+            stars();
+    
+            //ship.drawShip();
+
+            /*window.addEventListener("keydown", function (event) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                 if (event.keyCode == 39 && ball.x < canvas.width - ball.r)
-                  ball.x += Math.min(5, canvas.width - ball.x - ball.r);
+                    ball.x += Math.min(5, canvas.width - ball.x - ball.r);
                 else if (event.keyCode == 37 && ball.x > ball.r)
-                  ball.x -= 15;
+                    ball.x -= 15;
                 else if (event.keyCode == 40 && ball.y < canvas.height - ball.r)
-                  ball.y += 15;
+                    ball.y += 15;
                 else if (event.keyCode == 38 && ball.y > ball.r)
-                  ball.y -= 15;
+                    ball.y -= 15;
 
                 drawCircle();
-              });
+            });*/
 
+        }//onLoad function
         
-        }
     </script>
+    </div>
 </body>
 
 </html>
