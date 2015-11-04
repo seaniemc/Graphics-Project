@@ -62,7 +62,7 @@
             }; // End spaceShip Object
             
             //Star Object
-            var star = {
+           /* var star = {
                 x: Math.floor(Math.random() * 599),
                 y: 0,
                 rad: Math.floor(Math.random() * 30),
@@ -84,7 +84,14 @@
                     star.y += star.velocity;
                  window.requestAnimationFrame(star.makeStars);   
             }//makeSatrs
-        };//star object
+        };//star object*/
+            function star(x, y, rad, velocity, fill){
+                this.x = x || Math.floor(Math.random() * 599);
+                this.y = y || 0;
+                this.rad = rad || Math.floor((Math.random() * 30) + 10);
+                this.velocity = velocity || 3;
+                this.fill = fill || "white";
+            }
             
             window.addEventListener("keydown", function (event) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
