@@ -27,13 +27,7 @@
             // Make the fill style red.
             var oldBack = new Image();
 
-            function init(){
-                for(var i = 0; i < 4; i++){
-                    star.makeStars();
-                }
-                spaceShip.drawSpaceShip();
-            }
-            //init();
+            
           var spaceShip = {
               
                 position: {
@@ -85,12 +79,22 @@
                  window.requestAnimationFrame(star.makeStars);   
             }//makeSatrs
         };//star object*/
-            function star(x, y, rad, velocity, fill){
-                this.x = x || Math.floor(Math.random() * 599);
+            function Star(x, y, rad, velocity, fill){
+                this.x = x || Math.floor(Math.random() * 599);//this create a random number between 0 and 599 on the x axis
                 this.y = y || 0;
-                this.rad = rad || Math.floor((Math.random() * 30) + 10);
+                this.rad = rad || Math.floor((Math.random() * 30) + 10);//this create a random number between 10 and 30 for the radius
                 this.velocity = velocity || 3;
                 this.fill = fill || "white";
+            }
+            
+            Star.prototype.drawStars(){
+                ctx.beginPath();
+                ctx.fillStyle = this.fill;                         
+                ctx.arc(this.x, this.y, this.rad, 0, Math.PI * 2, true);
+                ctx.closePath();
+                ctx.fill();
+                this.y += this.velocity;
+                window.requestAnimationFrame(star.makeStars);
             }
             
             window.addEventListener("keydown", function (event) {
