@@ -16,7 +16,7 @@
 
 <body>
     <div style="position: absolute; top: 50px; left: 50px;">
-    <canvas id="canvas-for-Game" width ="600" height="600"></canvas>
+    <canvas id="canvas-for-Game" width ="1000" height="600"></canvas>
     <script language="javascript" src="jquery-2.1.4.min (1).js"></script>
     <script>
         window.onload = function () {
@@ -25,45 +25,43 @@
             // Get a 2D context for the canvas.
             var ctx = canvas.getContext("2d");
             // Make the fill style red.
-            var oldBack = new Image();
-            var stars = [];
+            var stars = [];//stars array
+            var numOfStars = 3;//controls the number of stars
             
-            
+            //object used to create the spaceship.
           var spaceShip = {
                 position: {
                     x: canvas.width / 2, 
                     y: canvas.height - 20
                 },
-              
                 size: {
                     width: 50, 
                     height: 12
-                },  
-              
+                }, 
                 Velocity: {
                     x: 20
                 }, 
-               // colour: "white", 
+         
                 drawSpaceShip: function(){ // Draw Spaceship Object
-                    
                     ctx.beginPath();
                     ctx.fillStyle = "blue";
                     ctx.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
                     ctx.fillRect(this.position.x + 15, this.position.y, this.size.width - 30, this.size.height / 2 - 12);
                     ctx.fillRect(this.position.x + 22.5, this.position.y, this.size.width - 45, this.size.height / 2 - 15);
-                    
-                    //if ()
-                    window.requestAnimationFrame(spaceShip.drawSpaceShip);
+                    ctx.closePath();
+                    ctx.fill();
+                   requestAnimationFrame(this.drawSpaceShip);
                 }// End drawShip function 
-            }; // End spaceShip Object
+            };// End spaceShip Object
             
            
+            
             function Star(x, y, rad, velocity, fill){
-                this.x = Math.floor(Math.random() * 599);//this create a random number between 0 and 599 on the x axis
+                this.x = Math.floor(Math.random() * 999);//this create a random number between 0 and 599 on the x axis
                 this.y = 0;
                 this.rad = Math.floor((Math.random() * 30) + 1);//this create a random number between 10 and 30 for the radius
                 this.velocity = 6;
-                this.fill = fill || "white";
+                this.fill = fill 
 
                 this.draw = function(){
                     ctx.beginPath();
@@ -76,30 +74,31 @@
             }
             
             function createMultipleStars(){
-                for (var i = 0; i <= 4; i++)
+                for (var i = 0; i <= numOfStars; i++)
                     stars[i] = new Star(i * 50, 10, i, i, "rgba(255,215,0,0.6)");
             }
             createMultipleStars();
             
             function step() {
                 ctx.clearRect(0,0,canvas.width, canvas.height);
-                for (var i = 0; i<= 4; i++)
+                for (var i = 0; i<= numOfStars; i++)
                     stars[i].draw();
                 requestAnimationFrame(step);
             }
-            step();
+           spaceShip.drawSpaceShip();
+           step();
             
-            window.addEventListener("keydown", function (event) {
+            
+             window.addEventListener("keydown", function (event) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-
                 if (event.keyCode == 39 && spaceShip.position.x < canvas.width)
                     spaceShip.position.x += spaceShip.Velocity.x;
                 
                 else if (event.keyCode == 37 )
-                    spaceShip.position.x -= spaceShip.Velocity.x
+                    spaceShip.position.x -= spaceShip.Velocity.x;
                     
                 else if (event.keyCode == 40 && spaceShip.position.y < canvas.height)
-                    spaceShip.position.y += spaceShip.Velocity.x
+                    spaceShip.position.y += spaceShip.Velocity.x;
                     
                 else if (event.keyCode == 38 && spaceShip.position.y)
                     spaceShip.position.y -= spaceShip.Velocity.x;
@@ -107,7 +106,7 @@
                 spaceShip.drawSpaceShip();
             });
             
-          spaceShip.drawSpaceShip();
+        
         }//onLoad function
         
     </script>
