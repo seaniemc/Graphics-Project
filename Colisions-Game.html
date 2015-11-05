@@ -50,7 +50,7 @@
                     ctx.fillRect(this.position.x + 22.5, this.position.y, this.size.width - 45, this.size.height / 2 - 15);
                     ctx.closePath();
                     ctx.fill();
-                   requestAnimationFrame(this.drawSpaceShip);
+                   requestAnimationFrame(this.drawSpaceShip.bind(this));
                 }// End drawShip function 
             };// End spaceShip Object
             
@@ -59,8 +59,8 @@
             function Star(x, y, rad, velocity, fill){
                 this.x = Math.floor(Math.random() * 999);//this create a random number between 0 and 599 on the x axis
                 this.y = 0;
-                this.rad = Math.floor((Math.random() * 30) + 1);//this create a random number between 10 and 30 for the radius
-                this.velocity = 6;
+                this.rad = Math.floor((Math.random() * 30) + 15);//this create a random number between 10 and 30 for the radius
+                this.velocity = 5;
                 this.fill = fill 
 
                 this.draw = function(){
@@ -85,8 +85,12 @@
                     stars[i].draw();
                 requestAnimationFrame(step);
             }
-           spaceShip.drawSpaceShip();
-           step();
+           //spaceShip.drawSpaceShip();
+            var myVar2 = setInterval(function(){ createMultipleStars() }, 4000);
+            var myVar = setInterval(function(){ step() }, 4000);
+            
+    
+           //step();
             
             
              window.addEventListener("keydown", function (event) {
