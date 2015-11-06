@@ -7,7 +7,7 @@
     <title>Canvas</title>
 
     <style type="text/css">
-        canvas{
+        canvas {
             background-color: black;
         }
     </style>
@@ -16,132 +16,127 @@
 
 <body>
     <div style="position: absolute; top: 50px; left: 50px;">
-    <canvas id="canvas-for-Game" width ="1000" height="600"></canvas>
-    <script language="javascript" src="jquery-2.1.4.min (1).js"></script>
-    <script>
-        window.onload = function () {
-            //global variables 
-            var canvas = document.getElementById("canvas-for-Game");
-            // Get a 2D context for the canvas.
-            var ctx = canvas.getContext("2d");
-            // Make the fill style red.
-            var stars = [];//stars array
-            var numOfStars = 3;//controls the number of stars
-            var counter = 0;
-            //object used to create the ship.
-          var Ship = {
-                position: {
-                    x: canvas.width / 2, 
-                    y: canvas.height - 20
-                },
-                size: {
-                    width: 50, 
-                    height: 12
-                }, 
-                Velocity: {
-                    x: 20
-                }, 
-         
-                drawShip: function(){ // Draw Ship Object
-                    ctx.beginPath();
-                    ctx.fillStyle = "blue";
-                    ctx.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
-                    ctx.fillRect(this.position.x + 15, this.position.y, this.size.width - 30, this.size.height / 2 - 12);
-                    ctx.fillRect(this.position.x + 22.5, this.position.y, this.size.width - 45, this.size.height / 2 - 15);
-                    ctx.closePath();
-                    ctx.fill();
-                    
-                    if(Ship.position.x >= canvas.width - Ship.size.width)
-			         Ship.position.x = canvas.width - Ship.size.width;
-		
-                    if(Ship.position.x <= Ship.size.width - Ship.size.width)
-			         Ship.position.x = Ship.size.width - Ship.size.width;
-                    
-                    if(Ship.position.y >= canvas.height - Ship.size.height)
-			         Ship.position.y = canvas.height - Ship.size.height;
-		
-                    if(Ship.position.y <= Ship.size.height - Ship.size.height)
-			         Ship.position.y = Ship.size.height - Ship.size.height;
-		
-		
-                
-                   requestAnimationFrame(this.drawShip.bind(this));
-                }// End drawShip function 
-            };// End Ship Object
-            
-           
-            //constructor function which is used to create multiple stars
-            function Star(x, y, rad, velocity, fill){
-                this.x = Math.floor(Math.random() * 985 + 15);//this create a random number between 15 and 985 on the x axis
-                this.y = 0;
-                this.rad = Math.floor((Math.random() * 30) + 15);//this create a random number between 15 and 30 for the radius
-                this.velocity = 5;
-                this.fill = fill 
-                
-                //function draws the star circle
-                this.draw = function(){
-                    ctx.beginPath();
-                    ctx.fillStyle = this.fill;                         
-                    ctx.arc(this.x, this.y, this.rad, 0, Math.PI * 2, true);
-                    ctx.closePath();
-                    ctx.fill();
-                    this.y += this.velocity;
-                    //this.velocity = 0;
-                }//end this.draw
-            }//end constructor function
-            
-            //this function creates multiple instances of Star constructor function.
-            function createMultipleStars(){
-                for (var i = 0; i <= numOfStars; i++)
-                    stars[i] = new Star(i * 50, 10, i, i, "rgba(255,215,0,0.6)");
-            }
-            
-            //Darws the Stars on the canvas.
-            function step() {
-                ctx.clearRect(0,0,canvas.width, canvas.height);
-                
-                for (var i = 0; i<= numOfStars; i++){
-                    
-                    //if(stars[i].x < )
-                     stars[i].draw();
-                    if(Ship.position.x < stars[i].x + stars[i].rad || Ship.position.x + Ship.size.width > stars[i].x 
-                          || Ship.position.y < stars[i].y + stars[i].rad || Ship.position.y + Ship.size.height > stars[i].y){
-                           counter += 1;
+        <canvas id="canvas-for-Game" width="1000" height="600"></canvas>
+        <script language="javascript" src="jquery-2.1.4.min (1).js"></script>
+        <script>
+            window.onload = function () {
+                    //global variables 
+                    var canvas = document.getElementById("canvas-for-Game");
+                    // Get a 2D context for the canvas.
+                    var ctx = canvas.getContext("2d");
+                    var stars = []; //stars array
+                    var numOfStars = 3; //controls the number of stars
+                    var counter = 0; // checks to see if the ship has been hit
+                    //object used to create the ship.
+                    var Ship = {
+                        position: {
+                            x: canvas.width / 2,
+                            y: canvas.height - 20
+                        },
+                        size: {
+                            width: 50,
+                            height: 12
+                        },
+                        Velocity: {
+                            x: 20
+                        },
+
+                        drawShip: function () { // Draw Ship Object
+                                ctx.beginPath();
+                                ctx.fillStyle = "blue";
+                                ctx.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
+                                ctx.fillRect(this.position.x + 15, this.position.y, this.size.width - 30, this.size.height / 2 - 12);
+                                ctx.fillRect(this.position.x + 22.5, this.position.y, this.size.width - 45, this.size.height / 2 - 15);
+                                ctx.closePath();
+                                ctx.fill();
+
+                                if (Ship.position.x >= canvas.width - Ship.size.width)
+                                    Ship.position.x = canvas.width - Ship.size.width;
+
+                                if (Ship.position.x <= Ship.size.width - Ship.size.width)
+                                    Ship.position.x = Ship.size.width - Ship.size.width;
+
+                                if (Ship.position.y >= canvas.height - Ship.size.height)
+                                    Ship.position.y = canvas.height - Ship.size.height;
+
+                                if (Ship.position.y <= Ship.size.height - Ship.size.height)
+                                    Ship.position.y = Ship.size.height - Ship.size.height;
+
+
+
+                                requestAnimationFrame(this.drawShip.bind(this));
+                            } // End drawShip function 
+                    }; // End Ship Object
+
+
+                    //constructor function which is used to create multiple stars
+                    function Star(x, y, rad, velocity, fill) {
+                        this.x = Math.floor(Math.random() * 985 + 15); //this create a random number between 15 and 985 on the x axis
+                        this.y = 0;
+                        this.rad = Math.floor((Math.random() * 30) + 15); //this create a random number between 15 and 30 for the radius
+                        this.velocity = 5;
+                        this.fill = fill
+
+                        //function draws the star circle
+                        this.draw = function () {
+                                ctx.beginPath();
+                                ctx.fillStyle = this.fill;
+                                ctx.arc(this.x, this.y, this.rad, 0, Math.PI * 2, true);
+                                ctx.closePath();
+                                ctx.fill();
+                                this.y += this.velocity;
+                                //this.velocity = 0;
+                            } //end this.draw
+                    } //end constructor function
+
+                    //this function creates multiple instances of Star constructor function.
+                    function createMultipleStars() {
+                        for (var i = 0; i <= numOfStars; i++)
+                            stars[i] = new Star(i * 50, 10, i, i, "rgba(255,215,0,0.6)");
                     }
-                    
-                    //stars[i].velocity = 6;
-                }
-                console.log(counter);
-                requestAnimationFrame(step);
-            }//step
-            
-          function init(){
-              createMultipleStars();
-              step();
-              Ship.drawShip();
-          }
-            
-            //event listener method id used to control the object with the arrow keys
-             window.addEventListener("keydown", function (event) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                if (event.keyCode == 39 && Ship.position.x < canvas.width)
-                    Ship.position.x += Ship.Velocity.x;
-                 
-                else if (event.keyCode == 37 )
-                    Ship.position.x -= Ship.Velocity.x;
-                    
-                else if (event.keyCode == 40 && Ship.position.y < canvas.height)
-                    Ship.position.y += Ship.Velocity.x;
-                    
-                  
-                Ship.drawSpaceShip();
-            });//end 
-            
-            //this function sets the interval for 3000 miliseconds
-            var gameLoop = window.setInterval(function(){ init() }, 3000);
-        }//onLoad function
-        
-    </script>
+
+                    //Darws the Stars on the canvas.
+                    function step() {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                        for (var i = 0; i <= numOfStars; i++) {
+                            stars[i].draw();
+                            if (Ship.position.x < stars[i].rad || Ship.position.x + Ship.size.width > stars[i].rad || Ship.position.y <  stars[i].rad || Ship.position.y + Ship.size.height > stars[i].rad) {
+                                counter += 1;
+                            }
+
+                        }
+                        console.log(counter);
+                        requestAnimationFrame(step);   
+                    } //step
+
+                    function init() {
+                        createMultipleStars();
+                        step();
+                        Ship.drawShip();
+                    }
+
+                    //event listener method id used to control the object with the arrow keys
+                    window.addEventListener("keydown", function (event) {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        if (event.keyCode == 39 && Ship.position.x < canvas.width)
+                            Ship.position.x += Ship.Velocity.x;
+
+                        else if (event.keyCode == 37)
+                            Ship.position.x -= Ship.Velocity.x;
+
+                        else if (event.keyCode == 40 && Ship.position.y < canvas.height)
+                            Ship.position.y += Ship.Velocity.x;
+
+                        Ship.drawShip();
+                    }); //end 
+
+                    //this function sets the interval for 3000 miliseconds
+                    var gameLoop = window.setInterval(function () {
+                        init()
+                    }, 3000);
+                } //onLoad function
+        </script>
     </div>
 </body>
 
