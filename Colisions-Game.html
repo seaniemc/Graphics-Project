@@ -51,17 +51,19 @@
                     ctx.closePath();
                     ctx.fill();
                     
-                    if((this.position.x >= canvas.width - this.width) || (this.position.x <= this.size.width))
-                        this.position.x = canvas.width - this.size.width;
+                    if(spaceShip.position.x >= canvas.width - spaceShip.size.width)
+			         spaceShip.position.x = canvas.width - spaceShip.size.width;
+		
+                    if(spaceShip.position.x <= spaceShip.size.width - spaceShip.size.width)
+			         spaceShip.position.x = spaceShip.size.width - spaceShip.size.width;
                     
-                    if((this.position.x >= canvas.height - this.height) || (this.position.x <= this.size.height))
-                        this.position.x = canvas.height - this.size.height;
-                    
-                    
-                    if ((this.position.y >= canvas.height - this.size.height) ||  (this.position.y <= this.size.height))
-                        this.position.y = canvas.height - this.size.height;
-                    
-                    
+                    if(spaceShip.position.y >= canvas.height - spaceShip.size.height)
+			         spaceShip.position.y = canvas.height - spaceShip.size.height;
+		
+                    if(spaceShip.position.y <= spaceShip.size.height - spaceShip.size.height)
+			         spaceShip.position.y = spaceShip.size.height - spaceShip.size.height;
+		
+		
                 
                    requestAnimationFrame(this.drawSpaceShip.bind(this));
                 }// End drawShip function 
@@ -70,7 +72,7 @@
            
             
             function Star(x, y, rad, velocity, fill){
-                this.x = Math.floor(Math.random() * 999);//this create a random number between 0 and 599 on the x axis
+                this.x = Math.floor(Math.random() * 985 + 15);//this create a random number between 0 and 599 on the x axis
                 this.y = 0;
                 this.rad = Math.floor((Math.random() * 30) + 15);//this create a random number between 10 and 30 for the radius
                 this.velocity = 5;
@@ -85,27 +87,29 @@
                     this.y += this.velocity;
                 }
             }
-            
+            //this function creates multiple instances of Star constructor function.
             function createMultipleStars(){
                 for (var i = 0; i <= numOfStars; i++)
                     stars[i] = new Star(i * 50, 10, i, i, "rgba(255,215,0,0.6)");
             }
             //createMultipleStars();
             
+            //Darws the Stars on the canvas.
             function step() {
                 ctx.clearRect(0,0,canvas.width, canvas.height);
                 for (var i = 0; i<= numOfStars; i++)
                      stars[i].draw();
                 requestAnimationFrame(step);
             }
-           spaceShip.drawSpaceShip();
-            //var myVar2 = setInterval(function(){ createMultipleStars() }, 4000);
-            var myVar = setInterval(function(){ init() }, 4000);
+            
+           
+            var gameLoop = setInterval(function(){ init() }, 3000);
             
     
           function init(){
               createMultipleStars();
               step();
+              spaceShip.drawSpaceShip();
           }
             
             
@@ -120,8 +124,6 @@
                 else if (event.keyCode == 40 && spaceShip.position.y < canvas.height)
                     spaceShip.position.y += spaceShip.Velocity.x;
                     
-                else if (event.keyCode == 38 && spaceShip.position.y)
-                    spaceShip.position.y -= spaceShip.Velocity.x;
                   
                 spaceShip.drawSpaceShip();
             });
