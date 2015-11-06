@@ -27,9 +27,9 @@
             // Make the fill style red.
             var stars = [];//stars array
             var numOfStars = 3;//controls the number of stars
-            var counter;
+            var counter = 0;
             //object used to create the spaceship.
-          var spaceShip = {
+          var Ship = {
                 position: {
                     x: canvas.width / 2, 
                     y: canvas.height - 20
@@ -42,7 +42,7 @@
                     x: 20
                 }, 
          
-                drawSpaceShip: function(){ // Draw Spaceship Object
+                drawShip: function(){ // Draw Spaceship Object
                     ctx.beginPath();
                     ctx.fillStyle = "blue";
                     ctx.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
@@ -51,26 +51,26 @@
                     ctx.closePath();
                     ctx.fill();
                     
-                    if(spaceShip.position.x >= canvas.width - spaceShip.size.width)
-			         spaceShip.position.x = canvas.width - spaceShip.size.width;
+                    if(Ship.position.x >= canvas.width - Ship.size.width)
+			         Ship.position.x = canvas.width - Ship.size.width;
 		
-                    if(spaceShip.position.x <= spaceShip.size.width - spaceShip.size.width)
-			         spaceShip.position.x = spaceShip.size.width - spaceShip.size.width;
+                    if(Ship.position.x <= Ship.size.width - Ship.size.width)
+			         Ship.position.x = Ship.size.width - Ship.size.width;
                     
-                    if(spaceShip.position.y >= canvas.height - spaceShip.size.height)
-			         spaceShip.position.y = canvas.height - spaceShip.size.height;
+                    if(Ship.position.y >= canvas.height - Ship.size.height)
+			         Ship.position.y = canvas.height - Ship.size.height;
 		
-                    if(spaceShip.position.y <= spaceShip.size.height - spaceShip.size.height)
-			         spaceShip.position.y = spaceShip.size.height - spaceShip.size.height;
+                    if(Ship.position.y <= Ship.size.height - Ship.size.height)
+			         Ship.position.y = Ship.size.height - Ship.size.height;
 		
 		
                 
-                   requestAnimationFrame(this.drawSpaceShip.bind(this));
+                   requestAnimationFrame(this.drawShip.bind(this));
                 }// End drawShip function 
             };// End spaceShip Object
             
            
-            
+            //constructor function which is used to create multiple stars
             function Star(x, y, rad, velocity, fill){
                 this.x = Math.floor(Math.random() * 985 + 15);//this create a random number between 15 and 985 on the x axis
                 this.y = 0;
@@ -85,6 +85,7 @@
                     ctx.closePath();
                     ctx.fill();
                     this.y += this.velocity;
+                    //this.velocity = 0;
                 }
             }
             //this function creates multiple instances of Star constructor function.
@@ -92,48 +93,52 @@
                 for (var i = 0; i <= numOfStars; i++)
                     stars[i] = new Star(i * 50, 10, i, i, "rgba(255,215,0,0.6)");
             }
-            /
+            
             //Darws the Stars on the canvas.
             function step() {
                 ctx.clearRect(0,0,canvas.width, canvas.height);
                 
                 for (var i = 0; i<= numOfStars; i++){
+                    
+                    //if(stars[i].x < )
                      stars[i].draw();
-                    if(spaceShip.position.x < stars[i].x + stars[i].rad && spaceShip.position.x + spaceShip.size.width > stars[i].x 
-                          && spaceShip.position.y < stars[i].y + stars[i].rad && spaceShip.position.y + spaceShip.size.height > stars[i].y){
+                    if(Ship.position.x < stars[i].x + stars[i].rad || Ship.position.x + Ship.size.width > stars[i].x 
+                          || Ship.position.y < stars[i].y + stars[i].rad || Ship.position.y + Ship.size.height > stars[i].y){
                            counter += 1;
-                        console.log(counter);
                     }
                     
+                    //stars[i].velocity = 6;
                 }
-                stars[i].velocity = 6;
+                console.log(counter);
                 requestAnimationFrame(step);
             }//step
             
            
-            var gameLoop = setInterval(function(){ init() }, 3000);
+            
             
           function init(){
               createMultipleStars();
               step();
-              spaceShip.drawSpaceShip();
+              Ship.drawShip();
           }
             
             
              window.addEventListener("keydown", function (event) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                if (event.keyCode == 39 && spaceShip.position.x < canvas.width)
-                    spaceShip.position.x += spaceShip.Velocity.x;
+                if (event.keyCode == 39 && Ship.position.x < canvas.width)
+                    Ship.position.x += Ship.Velocity.x;
                  
                 else if (event.keyCode == 37 )
-                    spaceShip.position.x -= spaceShip.Velocity.x;
+                    Ship.position.x -= Ship.Velocity.x;
                     
-                else if (event.keyCode == 40 && spaceShip.position.y < canvas.height)
-                    spaceShip.position.y += spaceShip.Velocity.x;
+                else if (event.keyCode == 40 && Ship.position.y < canvas.height)
+                    Ship.position.y += Ship.Velocity.x;
                     
                   
-                spaceShip.drawSpaceShip();
+                Ship.drawSpaceShip();
             });
+            
+            var gameLoop = window.setInterval(function(){ init() }, 3000);
         }//onLoad function
         
     </script>
