@@ -27,7 +27,7 @@
             // Make the fill style red.
             var stars = [];//stars array
             var numOfStars = 3;//controls the number of stars
-            
+            var counter;
             //object used to create the spaceship.
           var spaceShip = {
                 position: {
@@ -72,9 +72,9 @@
            
             
             function Star(x, y, rad, velocity, fill){
-                this.x = Math.floor(Math.random() * 985 + 15);//this create a random number between 0 and 599 on the x axis
+                this.x = Math.floor(Math.random() * 985 + 15);//this create a random number between 15 and 985 on the x axis
                 this.y = 0;
-                this.rad = Math.floor((Math.random() * 30) + 15);//this create a random number between 10 and 30 for the radius
+                this.rad = Math.floor((Math.random() * 30) + 15);//this create a random number between 15 and 30 for the radius
                 this.velocity = 5;
                 this.fill = fill 
 
@@ -92,20 +92,27 @@
                 for (var i = 0; i <= numOfStars; i++)
                     stars[i] = new Star(i * 50, 10, i, i, "rgba(255,215,0,0.6)");
             }
-            //createMultipleStars();
-            
+            /
             //Darws the Stars on the canvas.
             function step() {
                 ctx.clearRect(0,0,canvas.width, canvas.height);
-                for (var i = 0; i<= numOfStars; i++)
+                
+                for (var i = 0; i<= numOfStars; i++){
                      stars[i].draw();
+                    if(spaceShip.position.x < stars[i].x + stars[i].rad && spaceShip.position.x + spaceShip.size.width > stars[i].x 
+                          && spaceShip.position.y < stars[i].y + stars[i].rad && spaceShip.position.y + spaceShip.size.height > stars[i].y){
+                           counter += 1;
+                        console.log(counter);
+                    }
+                    
+                }
+                stars[i].velocity = 6;
                 requestAnimationFrame(step);
-            }
+            }//step
             
            
             var gameLoop = setInterval(function(){ init() }, 3000);
             
-    
           function init(){
               createMultipleStars();
               step();
@@ -127,8 +134,6 @@
                   
                 spaceShip.drawSpaceShip();
             });
-            
-        
         }//onLoad function
         
     </script>
