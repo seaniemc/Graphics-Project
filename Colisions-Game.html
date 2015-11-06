@@ -28,7 +28,7 @@
             var stars = [];//stars array
             var numOfStars = 3;//controls the number of stars
             var counter = 0;
-            //object used to create the spaceship.
+            //object used to create the ship.
           var Ship = {
                 position: {
                     x: canvas.width / 2, 
@@ -42,7 +42,7 @@
                     x: 20
                 }, 
          
-                drawShip: function(){ // Draw Spaceship Object
+                drawShip: function(){ // Draw Ship Object
                     ctx.beginPath();
                     ctx.fillStyle = "blue";
                     ctx.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
@@ -67,7 +67,7 @@
                 
                    requestAnimationFrame(this.drawShip.bind(this));
                 }// End drawShip function 
-            };// End spaceShip Object
+            };// End Ship Object
             
            
             //constructor function which is used to create multiple stars
@@ -77,7 +77,8 @@
                 this.rad = Math.floor((Math.random() * 30) + 15);//this create a random number between 15 and 30 for the radius
                 this.velocity = 5;
                 this.fill = fill 
-
+                
+                //function draws the star circle
                 this.draw = function(){
                     ctx.beginPath();
                     ctx.fillStyle = this.fill;                         
@@ -86,8 +87,9 @@
                     ctx.fill();
                     this.y += this.velocity;
                     //this.velocity = 0;
-                }
-            }
+                }//end this.draw
+            }//end constructor function
+            
             //this function creates multiple instances of Star constructor function.
             function createMultipleStars(){
                 for (var i = 0; i <= numOfStars; i++)
@@ -113,16 +115,13 @@
                 requestAnimationFrame(step);
             }//step
             
-           
-            
-            
           function init(){
               createMultipleStars();
               step();
               Ship.drawShip();
           }
             
-            
+            //event listener method id used to control the object with the arrow keys
              window.addEventListener("keydown", function (event) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 if (event.keyCode == 39 && Ship.position.x < canvas.width)
@@ -136,8 +135,9 @@
                     
                   
                 Ship.drawSpaceShip();
-            });
+            });//end 
             
+            //this function sets the interval for 3000 miliseconds
             var gameLoop = window.setInterval(function(){ init() }, 3000);
         }//onLoad function
         
