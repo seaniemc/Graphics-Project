@@ -95,15 +95,18 @@
             function step() {
                 ctx.clearRect(0,0,canvas.width, canvas.height);
                 for (var i = 0; i<= numOfStars; i++)
-                    stars[i].draw();
+                     stars[i].draw();
                 requestAnimationFrame(step);
             }
            spaceShip.drawSpaceShip();
-            var myVar2 = setInterval(function(){ createMultipleStars() }, 4000);
-            var myVar = setInterval(function(){ step() }, 4000);
+            //var myVar2 = setInterval(function(){ createMultipleStars() }, 4000);
+            var myVar = setInterval(function(){ init() }, 4000);
             
     
-           //step();
+          function init(){
+              createMultipleStars();
+              step();
+          }
             
             
              window.addEventListener("keydown", function (event) {
